@@ -98,32 +98,31 @@ def tobs():
 @app.route("/api/v1.0/list_start/<start>")
 def daterange_st(start):
 # grouped by date, displayes the min avg and max of an inputed date range.
-    z = session.query(measurement.date, func.min(measurement.tobs), func.avg(measurement.tobs), func.max(measurement.tobs)).\
+    z = session.query(func.min(measurement.tobs), func.avg(measurement.tobs), func.max(measurement.tobs)).\
         filter(measurement.date >= start).group_by(measurement.date).all() 
  
     all_climate4 = []  
     for i in z:
         climate4 = {}
-        climate4["Dates 2017-08-23 to:"] = i[0]
-        climate4["Min Temp"] = i[1]
-        climate4["Avg Temp"] = i[2]
-        climate4["Max Temp"] = i[3]
+        climate4["Min Temp"] = i[0]
+        climate4["Avg Temp"] = i[1]
+        climate4["Max Temp"] = i[2]
         all_climate4.append(climate4)
     return jsonify(all_climate4)
  
 @app.route("/api/v1.0/list_start_end/<start>/<end>")
 def daterange_st_ed(start, end):
 # grouped by date, displayes the min avg and max of an inputed date range.
-    z = session.query(measurement.date, func.min(measurement.tobs), func.avg(measurement.tobs), func.max(measurement.tobs)).\
+    z = session.query(func.min(measurement.tobs), func.avg(measurement.tobs), func.max(measurement.tobs)).\
         filter(measurement.date >= start).filter(measurement.date <= end).group_by(measurement.date).all() 
  
     all_climate4 = []  
     for i in z:
         climate4 = {}
-        climate4["Date"] = i[0]
-        climate4["Min Temp"] = i[1]
-        climate4["Avg Temp"] = i[2]
-        climate4["Max Temp"] = i[3]
+#       climate4["Date"] = i[0]
+        climate4["Min Temp"] = i[0]
+        climate4["Avg Temp"] = i[1]
+        climate4["Max Temp"] = i[2]
         all_climate4.append(climate4)
     return jsonify(all_climate4)
 #    if end is null:
@@ -153,10 +152,9 @@ def threevals_st(start2):
     all_climate5 = []   
     for i in y:
         climate5 = {}
-        climate5["Dates 2017-08-23 to:"] = i[0]
-        climate5["Min Temp"] = i[1]
-        climate5["Avg Temp"] = i[2]
-        climate5["Max Temp"] = i[3]
+        climate5["Min Temp"] = i[0]
+        climate5["Avg Temp"] = i[1]
+        climate5["Max Temp"] = i[2]
         all_climate5.append(climate5)
     return jsonify(all_climate5)
 
@@ -164,17 +162,16 @@ def threevals_st(start2):
 @app.route("/api/v1.0/3values_start_end/<start2>/<end2>")
 def threevals_st_ed(start2, end2):
 
-    y= session.query(measurement.date, func.min(measurement.tobs), func.avg(measurement.tobs), func.max(measurement.tobs)).\
+    y= session.query(func.min(measurement.tobs), func.avg(measurement.tobs), func.max(measurement.tobs)).\
         filter(measurement.date >= start2).filter(measurement.date <= end2).all()
  
  
     all_climate5 = []   
     for i in y:
         climate5 = {}
-        climate5["Date"] = i[0]
-        climate5["Min Temp"] = i[1]
-        climate5["Avg Temp"] = i[2]
-        climate5["Max Temp"] = i[3]
+        climate5["Min Temp"] = i[0]
+        climate5["Avg Temp"] = i[1]
+        climate5["Max Temp"] = i[2]
         all_climate5.append(climate5)
     return jsonify(all_climate5)
 
